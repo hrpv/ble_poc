@@ -1,0 +1,5 @@
+python-for-android/
+venv/
+app/bin/
+app/p4a-recipes/
+app/buildozer.spec
