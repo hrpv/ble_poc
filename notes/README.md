@@ -13,9 +13,24 @@ unter `/home/ki-user/` liegt, ist für die Sandbox **nicht** sichtbar.
 
 **1. PAT Token auf GitHub erstellen**
 
-- Unter https://github.com/settings/tokens → "Fine-grained tokens"
-- Scope: nur das betreffende Repository, Berechtigung `Contents: Read & Write`
+Unter https://github.com/settings/tokens → "Fine-grained tokens" → "Generate new token"
+
+**Option A — Nur git push auf bestehende Repos**
+
+- "Repository access" → "Only select repositories" → gewünschte Repos auswählen
+- Berechtigung: `Contents: Read & Write`
 - Empfehlung: kurze Gültigkeit (7–30 Tage)
+
+**Option B — git push + neue Repositories anlegen (über die GitHub API)**
+
+- "Repository access" → **"All repositories"**
+- Berechtigungen:
+  - `Administration: Read & Write` (zum Anlegen neuer Repos)
+  - `Contents: Read & Write` (für git push/pull)
+- Empfehlung: kurze Gültigkeit (7–30 Tage)
+
+> Option B wird benötigt wenn die KI-Sandbox neue Repos per API anlegen soll
+> (`curl https://api.github.com/user/repos`). Option A reicht für normalen git-Betrieb.
 
 **2. Credentials-Datei im gemounteten Bereich ablegen (auf dem Host)**
 
