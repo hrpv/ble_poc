@@ -96,9 +96,23 @@ landet dann im Klartext in `.git/config` und in `git remote -v`. Stattdessen imm
 die Credentials-Datei wie oben.
 
 ### Token erneuern (nach Ablauf)
+
+⚠️ `.git-credentials` kann mehr als eine Zeile enthalten (z. B. zusätzliche
+Proxy-Credentials). **Nicht** mit `echo ... > Datei` überschreiben — das löscht alle
+anderen Zeilen. Stattdessen die Datei in-place bearbeiten:
+
 ```bash
-echo "https://GITHUB_USERNAME:NEUER_TOKEN@github.com" > /srv/ki-workspace/project/.git-credentials
+sudo nano /srv/ki-workspace/project/.git-credentials
+# nur die GitHub-Zeile mit dem neuen Token ersetzen, Rest unverändert lassen
 ```
+
+Lesen erfordert ebenfalls `sudo`, da die Datei `ki-user` (UID 1001) gehört, nicht dem
+Host-User:
+```bash
+sudo cat /srv/ki-workspace/project/.git-credentials
+```
+`cat` ohne `sudo` schlägt mit "Permission denied" fehl.
+
 Repository-Konfiguration muss nicht erneut gesetzt werden.
 
 ### Sicherheit
