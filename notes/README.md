@@ -67,11 +67,21 @@ Stattdessen die Credentials-Datei wie oben beschrieben verwenden.
 
 ### Token erneuern
 
-Nach Ablauf des Tokens einfach auf dem Host überschreiben:
+⚠️ `.git-credentials` kann mehr als eine Zeile enthalten (z. B. zusätzliche
+Proxy-Credentials). **Nicht** mit `echo ... > Datei` überschreiben — das löscht alle
+anderen Zeilen. Stattdessen die Datei in-place bearbeiten:
 
 ```bash
-echo "https://GITHUB_USERNAME:NEUER_TOKEN@github.com" > /srv/ki-workspace/project/.git-credentials
+sudo nano /srv/ki-workspace/project/.git-credentials
+# nur die GitHub-Zeile mit dem neuen Token ersetzen, Rest unverändert lassen
 ```
+
+Lesen erfordert ebenfalls `sudo`, da die Datei `ki-user` (UID 1001) gehört, nicht dem
+Host-User:
+```bash
+sudo cat /srv/ki-workspace/project/.git-credentials
+```
+`cat` ohne `sudo` schlägt mit "Permission denied" fehl.
 
 Die Repository-Konfiguration muss nicht erneut gesetzt werden.
 
